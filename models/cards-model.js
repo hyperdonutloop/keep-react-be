@@ -1,35 +1,44 @@
 const db = require('../dbConfig.js');
 
 module.exports = {
-  add, 
   find,
-  findBy,
+  add,
+  update,
+  remove,
   findById,
-  findByEmail
+  getByUserId
 };
 
+function getByUserId(user_id) {
+  return db('cards')
+    .where({ user_id })
+    .select('id', 'title', 'items');
+}
+
 function find() {
-  return db('users').select('id', 'username', 'password', 'department');
+  return db('cards');
 }
 
-function findBy(filter) {
-  return db('users').where(filter);
-}
-
-async function add(user) {
-  const [id] = await db('users').insert(user);
+async function add(card) {
+  const [id] = await db('cards').insert(card, ['id', 'title', 'items', 'user_id']);
 
   return findById(id);
 }
 
 function findById(id) {
-  return db('users')
+  return db('cards')
     .where({ id })
     .first();
 }
 
-function findByEmail(email) {
-  db('users')
-    .where({ email })
-    .first();
+function update (id,user) {
+  return db('cards')
+    .where({ id })
+    .update(user, ['id', 'title', 'items', 'user_id']);
+}
+
+function remove(id) {
+  return db('cards')
+    .where({ id: id })
+    .delete();
 }
