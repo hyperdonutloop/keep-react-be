@@ -7,10 +7,10 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/', (req, res) => {
-    res.status(200).json({
-        status: 200,
-        message: 'Welcome to the backend server 🤘🏼💀✨'
-    })
+	res.status(200).json({
+			status: 200,
+			message: 'Welcome to the backend server 🤘🏼💀✨'
+	})
 })
 
 module.exports = server;
